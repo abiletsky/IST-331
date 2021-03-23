@@ -1,0 +1,13 @@
+[
+  {
+	"id": 1,
+	"tailNumber": "N536SP",
+	"startingX": 400,
+	"startingY": 0,
+	"heading": 180,
+	"altitude": 26,
+	"groundspeed": 11,
+	"destination": "LAX",
+	"aircraft": "C172"
+  }
+]

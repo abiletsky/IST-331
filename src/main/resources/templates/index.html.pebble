@@ -1,0 +1,23 @@
+<div style="margin-right:20px;">
+    <table>
+        <thead>
+            <th style="width: 50px;">ID</td>
+            <th style="width: 100px;">Name</td>
+            <th style="width: 100px;">Color</td>
+        </thead>
+
+        {% for fruit in fruits %}
+            <tr style="text-align: center;">
+                <td style="width: 50px;">{{ fruit.getId() }}</td>
+                <td style="width: 100px;">{{ fruit.getName() }}</td>
+                <td style="width: 100px;">{{ fruit.getColor() }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div style="background-color: black; height: 700px; width: 500px;">
+    <div id="movingDiv" data-fruit-name="{{ fruits[2].getName() }}" style="height: 10px; width: 10px; background-color: {{ fruits[2].getColor() }};"></div>
+</div>
+
+
+<script src="js/index.js"></script>
