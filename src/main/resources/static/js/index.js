@@ -1,3 +1,8 @@
+function myFunction() {
+alert("Test");
+}
+
+
 var d = document.getElementById('movingDiv');
 d.style.position = "absolute";
 d.innerText = d.getAttribute('data-fruit-name');
@@ -21,3 +26,4 @@ id = setInterval(frame, 500);
       d.style.left = posX + "px";
     }
   }
+

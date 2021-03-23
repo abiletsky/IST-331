@@ -19,5 +19,6 @@
     <div id="movingDiv" data-fruit-name="{{ fruits[2].getName() }}" style="height: 10px; width: 10px; background-color: {{ fruits[2].getColor() }};"></div>
 </div>
 
+<button id="btn" onclick="myFunction()">Test</button>
 
 <script src="js/index.js"></script>
