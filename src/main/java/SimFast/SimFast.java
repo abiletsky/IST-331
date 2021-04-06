@@ -1,4 +1,4 @@
-package com.example.demo;
+package SimFast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
@@ -10,10 +10,15 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
-public class DemoApplication {
+public class SimFast {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(SimFast.class, args);
+	}
+
+	@Bean
+	public List<Flight> getFlights() throws Exception{
+		return Arrays.asList(new ObjectMapper().readValue(new ClassPathResource("flight-data.json").getFile(), Flight[].class));
 	}
 
 	@Bean

@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* com.example.demo.DemoApplication
+web: java -cp target/classes:target/dependency/* com.example.demo.SimFast.SimFast
