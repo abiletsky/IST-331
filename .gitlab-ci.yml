@@ -4,4 +4,4 @@ heroku:
  - master
  script:
     - gem install dpl
-    - dpl --provider=heroku --app=cryptic-taiga-31420 --api_key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=ist331-simfast --api_key=$HEROKU_API_KEY
