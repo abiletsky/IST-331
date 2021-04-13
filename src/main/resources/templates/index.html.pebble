@@ -2,15 +2,99 @@
 <head>
     <style>
     div.flight {
-        background-color: red;
+        background-color: black;
         width: 15px;
         height: 15px;
         position: absolute;
+        color: white;
+        font-family: sans-serif;
     }
 
+    .space{
+width: 200px;
+border-radius: 10px;
+margin: 0px 0px 0px 0px;
+background-color: yellow;
+}
+.backspace{
+width: 100px;
+border-radius: 10px;
+margin: 10px 10px 10px 10px;
+background-color: yellow;
+}
+.enter{
+width: 100px;
+border-radius: 10px;
+margin: 0px 0px 0px 0px;
+background-color: red;
+}
+.clear{
+width: 100px;
+border-radius: 10px;
+margin: 10px 10px 10px 10px;
+background-color: yellow;
+}
+.Zero{
+margin-left: 120px
+}
+table {
+    border: solid 2px black;
+}
 
+table.th {
+    padding: 5px;
+}
+div.KeyboardInput{
+    margin:10px;
+    width: 200px;
+}
+div.flightsearch{
+        margin:10px;
+        border: solid 1px black;
+        padding: 15px 15px;
+        display: inline-block;
+        margin-left: 55%;
+
+    }
+
+.btn{
+ margin: 9px;
+ width: 30px;
+ height: 30px;
+ background-color: aliceblue;
+
+}
+.Zero{
+margin: 5px;
+ width: 30px;
+ height: 30px;
+
+    margin-left: 165px;
+    background-color: aliceblue;
+}
+.Special{
+
+margin: 5px;
+ width: 100px;
+ height: 40px;
+ background-color: rgb(16, 219, 16);
+}
+.Special2{
+
+margin: 5px 6px;
+ width: 40px;
+ height: 40px;
+ background-color: rgb(16, 219, 16);
+}
+.container{
+padding-bottom: 200px;
+box-sizing: border-box;
+background-color: lightgray;
+}
 
     </style>
+
+    <script src="js/index.js"></script>
 </head>
 <body style="margin: 0px;">
 <div id="scope" style="background-color: Black; height: 100%; width: 800px;"></div>
@@ -21,14 +105,181 @@
          data-groundSpeed="{{ flight.getGroundSpeed() }}" data-destination="{{ flight.getDestination() }}"
          data-aircraft="{{ flight.getAircraft() }}"
          style="visibility: visible; top: {{ flight.getStartingY() }}; left: {{ flight.getStartingX() }};">
-
-        <div style="position: relative; top: -12px; left: 6px; font-size: 10px; display: block; width: 100px; color: blue;">
-            <span>Lorem Ipsum</span><br/>
-            <span style="position: absolute; top: -100px; visibility: hidden;">Lorem Ipsum</span>
-            <span style="visibility: visible;">Lorem Ipsum</span>
+        V
+        <div style="position: relative; top: -40px; left: 18px; font-size: 10px; display: block; width: 100px; color: white;">
+            <span id="data-block-1">Lorem Ipsum</span><br/>
+            <span id="data-block-2" class="hidden" style="position: absolute; top: -100px; visibility: hidden;">Lorem Ipsum</span>
+            <span id="data-block-2" style="visibility: visible;">Lorem Ipsum</span>
         </div>
 
     </div>
     {% endfor %}
+
+<div style="position: absolute;  left: 810px; top: 5px;">
+    <span style="border: 1px solid black; padding: 1px 4px 1px 4px;" id="timer">00:00:00</span>
+    <select id="speed" onchange="changeRate()">
+        <option value="1">1x</option>
+        <option value="2">2x</option>
+        <option value="4">4x</option>
+        <option value="8">8x</option>
+    </select>
+
+    <button onclick="startSimulation()">Start Simulation</button>
+</div>
+<div class="container" style = "width: 570px; height: 426px; position: absolute; left:55%; top: 330px">
+
+    <div class="row-one">
+        <button class = "Special2">M1</button>
+        <button class = "Special2">M2</button>
+        <button class = "Special2">M3</button>
+        <button class = "Special2">M4</button>
+        <button class = "Special2">CON</button>
+        <button class = "Special2">MAP</button>
+        <button class = "Special2">M5</button>
+        <button class = "Special2">M6</button>
+        <button class = "Special2">M7</button>
+        <button class = "Special2">M8</button>
+    </div>
+    <div class="row-two">
+        <button class = "Special2">M9</button>
+        <button class = "Special2">M10</button>
+        <button class = "Special2">M11</button>
+        <button class = "Special2">M12</button>
+        <button class = "Special2">TRK</button>
+        <button class = "Special2">USR</button>
+        <button class = "Special2">M13</button>
+        <button class = "Special2">M14</button>
+        <button class = "Special2">M15</button>
+        <button class = "Special2">M16</button>
+    </div>
+    <div class="row second" >
+        <button class="clear">Clear</button>
+        <button class ="backspace">Back space</button>
+        <button class ="space">Space</button>
+        <button class = "enter">Enter</button>
+    </div>
+    <div class="row third">
+        <button class = "Special">Init Ctrl</button>
+        <button class = "Special">TRK Repost</button>
+        <button class = "Special">TEAM Ctrl</button>
+        <button class = "Special">TRK Susp</button>
+        <button class = "Special">HND Off</button>
+    </div>
+    <div class="row fourth">
+        <button class = "Special">FLT Data</button>
+        <button class = "Special">Multifunction</button>
+        <button class = "Special">F8</button>
+        <button class = "Special">M7</button>
+        <button class = "Special">M8</button>
+    </div>
+
+
+    <div class="row six" >
+        <button class = "btn">A</button>
+        <button class = "btn">B</button>
+        <button class = "btn">C</button>
+        <button class = "btn">D</button>
+        <button class = "btn">E</button>
+        <button class = "btn">F</button>
+        <button class = "btn">G</button>
+        <button class = "btn">1</button>
+        <button class = "btn">2</button>
+        <button class = "btn">3</button>
+    </div>
+    <div class="row seven" >
+        <button class = "btn">H</button>
+        <button class = "btn">I</button>
+        <button class = "btn">J</button>
+        <button class = "btn">K</button>
+        <button class = "btn">L</button>
+        <button class = "btn">M</button>
+        <button class = "btn">N</button>
+        <button class = "btn">4</button>
+        <button class = "btn">5</button>
+        <button class = "btn">6</button>
+    </div>
+    <div class="row eight" >
+        <button class = "btn">O</button>
+        <button class = "btn">P</button>
+        <button class = "btn">Q</button>
+        <button class = "btn">R</button>
+        <button class = "btn">S</button>
+        <button class = "btn">T</button>
+        <button class = "btn">U</button>
+        <button class = "btn">7</button>
+        <button class = "btn">8</button>
+        <button class = "btn">9</button>
+    </div>
+    <div class="row nine" >
+        <button class = "btn">V</button>
+        <button class = "btn">W</button>
+        <button class = "btn">X</button>
+        <button class = "btn">Y</button>
+        <button class = "btn">Z</button>
+
+        <button class = "Zero">0</button>
+
+    </div>
+</div>
+
+
+<div class="container2"style = "width: 600px; height: 300px; position: absolute; left:55%; top: 0px">
+    <h2>Flight Strips</h2>
+    <table border="1" cellspacing="0px" cellpadding="0px"  width="85%">
+        <tr>
+            <th>Flight Code</th>
+            <th>Flight No.</th>
+            <th>Flight Name</th>
+            <th>Destination</th>
+
+        </tr>
+        <tr>
+            <td>
+                AWE548 </td>
+            <td>2601</td>
+            <td>PHX</td>
+            <td>+MAXX01 CNX+</td>
+
+        </tr>
+        <tr>
+            <td>
+                B733/J </td>
+            <td>P0259</td>
+            <td></td>
+            <td>PHX SJN3 SJN J74./.DFW</td>
+
+        </tr>
+        <tr>
+            <td>
+                328</td>
+            <td>350</td>
+            <td></td>
+            <td>NRP</td>
+
+        </tr>
+
+
+    </table>
+</div>
+
+
+</body>
+
+</html>
+<div class="KeybordInput"  style = "position: absolute; left:60%; top: 250px;">
+    <input name="Keyboard input" placeholder="Keyboard input" style="width: 200px;"type="text/">
+</div>
+<div class="flightsearch" style = "width: 500px; height: 50px; position: absolute; left:0%; top: 150px;">
+    <html>
+    <label>Flight Search </label>
+    <input name="flightsearch"  placeholder="Search Flights" type="text/">
+
+    <select name="Flights">
+        <option value="--">Select flight</option>
+        <option value="Sprint-A340-PHL-to-AMD">A340-PHL-AMD</option>
+        <option value="American-Airlines-AI345-PHL-to-ILN">AI345-PHL-ILN</option>
+    </select>
+    <br/>
+    <button type="search"  name="submit">Search</button>
 </body>
 </html>
