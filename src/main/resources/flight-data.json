@@ -9,10 +9,24 @@
 	"altitude": 26,
 	"groundSpeed": 11,
 	"destination": "LAX",
-	"aircraft": "C172"
+	"aircraft": "C172",
+	"endPhl": false
   },
   {
 	"id": 2,
+	"startTime": 2500,
+	"tailNumber": "UPS2196",
+	"startingX": 400,
+	"startingY": 400,
+	"heading": 270,
+	"altitude": 26,
+	"groundSpeed": 11,
+	"destination": "LAX",
+	"aircraft": "B763",
+	"endPhl": true
+  },
+  {
+	"id": 3,
 	"startTime": 2500,
 	"tailNumber": "N536SP",
 	"startingX": 400,
@@ -21,6 +35,20 @@
 	"altitude": 26,
 	"groundSpeed": 11,
 	"destination": "LAX",
-	"aircraft": "C172"
+	"aircraft": "C172",
+	"endPhl": false
+  },
+  {
+	"id": 4,
+	"startTime": 2500,
+	"tailNumber": "DAL4376",
+	"startingX": 310,
+	"startingY": 530,
+	"heading": 90,
+	"altitude": 26,
+	"groundSpeed": 11,
+	"destination": "EWR",
+	"aircraft": "C172",
+	"endPhl": false
   }
 ]

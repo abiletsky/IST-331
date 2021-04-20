@@ -11,6 +11,7 @@ public class Flight {
 	private int groundSpeed;
 	private String destination;
 	private String aircraft;
+	private boolean endPhl;
 
 	public long getId() {
 		return id;
@@ -55,5 +56,9 @@ public class Flight {
 
 	public String getAircraft() {
 		return aircraft;
+	}
+
+	public boolean getEndPhl() {
+		return endPhl;
 	}
 }
