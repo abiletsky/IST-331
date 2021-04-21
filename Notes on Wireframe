@@ -1,6 +1,0 @@
-These are the comments Jody had on our wireframe:
-- Move timer off the scope. Scope cannot be modified!
-    - Probably to top bar
-- Planes need to be represented as V shaped icons with only a 2 row data block that is always visible
-    - Second row of data flickers back and forth
-    - There should be a line to the data block from the V
