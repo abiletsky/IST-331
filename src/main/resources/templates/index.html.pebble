@@ -44,7 +44,7 @@ table.th {
     padding: 5px;
 }
 div.KeyboardInput{
-    width: 200px;
+    width: 400px;
 }
 div.flightsearch{
     border: solid 1px black;
@@ -175,12 +175,28 @@ div.flightsearch{
         </tr>
     </table>
 </div>
-<div class="flightsearch" style="width: 500px; height: 50px; position: absolute; top: 150px; left: 810px;">
-    <label>Search Flights: </label>
-    <input name="flightsearch" type="text">
+<div class="flightsearch" style="height: 170px; position: absolute; top: 115px; left: 810px; font-family: sans-serif; overflow-y: auto;">
+        <table>
+            <thead>
+                <th style="padding-right: 5px;">Call Sign</th>
+                <th style="padding-right: 5px;">Flight Plan Id</th>
+                <th style="padding-right: 5px;">Dep. Airport</th>
+                <th style="padding-right: 5px;">Destination</th>
+            </thead>
+            {% for f in flights %}
+            <tr id="list_{{ f.getTailNumber() }}" onclick="showFlightData('{{ f.getTailNumber() }}')">
+                <td>{{ f.getTailNumber() }}</td>
+                <td style="text-align: center;">{{ f.getFlightPlanId() }}</td>
+                <td style="text-align: center;">{{ f.getDepAirport() }}</td>
+                <td style="text-align: center;">{{ f.getDestination() }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
 </div>
-<div class="KeyboardInput" style="position: absolute; top: 250px; left: 810px;">
+<div class="KeyboardInput" style="position: absolute; top: 324px; left: 810px;">
     <input name="KeyboardInput" id="KeyboardInput"  style="width: 200px;" type="text">
+    <label id="invalidLabel" style="visibility: hidden; color: red; position: absolute; top: 2px; left: 225px;">Invalid Input</label>
 </div>
 <div class="container" style="width: 570px; height: 450px; position: absolute; top: 350px; left: 810px;">
     <div class="row">
@@ -235,7 +251,7 @@ div.flightsearch{
         <button class="Special2">TGT Gen</button>
         <button class="Special2">F16</button>
         <button class="Special3">IFR +</button>
-        <button class="Special3" style="margin-top">VFR /</button>
+        <button class="Special3">VFR /</button>
     </div>
     <div>
         <button class="btn" onclick="letterPress('A')">A</button>
@@ -281,7 +297,6 @@ div.flightsearch{
         <button class="btn" onclick="letterPress('Z')">Z</button>
 
         <button class="Zero" onclick="letterPress('0')">0</button>
-
     </div>
 </div>
 </body>

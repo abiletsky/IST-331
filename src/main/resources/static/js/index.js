@@ -14,8 +14,10 @@ function setTime() {
 
     var flights = document.getElementsByClassName("flight-not-ready");
     for(var i = 0; i < flights.length; i++) {
-        if (flights[0].getAttribute("data-startTime") / timerRate <= totalMs)
+        if (flights[0].getAttribute("data-startTime") / timerRate <= totalMs) {
+            document.getElementById(`list_${flights[0].id}`).remove();
             flights[0].classList.remove("flight-not-ready");
+        }
     }
 
     var hoursLabel = document.getElementById("hours");
@@ -38,15 +40,17 @@ function pad(val) {
 }
 
 function changeRate() {
-    timerRate = document.getElementById('rate').value;
+    if(!animationInterval)
+        timerRate = document.getElementById('rate').value;
 }
 
 function startSimulation() {
-    timerInterval = setInterval(setTime, baseFreq / timerRate);
-    animationInterval = setInterval(frame, baseFreq / timerRate);
-    dataBlockInterval = setInterval(toggleDataBlock, 2000);
+    if(!animationInterval) {
+        timerInterval = setInterval(setTime, baseFreq / timerRate);
+        animationInterval = setInterval(frame, baseFreq / timerRate);
+        dataBlockInterval = setInterval(toggleDataBlock, 2000);
+    }
 }
-
 function resetSimulation() {
     location.reload();
 }
@@ -94,6 +98,7 @@ function backspace() {
 function clearInput(){
     var input = document.getElementById("KeyboardInput");
     input.value = "";
+    document.getElementById("invalidLabel").style.visibility = "hidden";
 }
 
 function updateHeading(flightId, heading) {
@@ -144,11 +149,17 @@ function toggleDataBlock() {
 }
 
  function parseInput() {
+    if(!animationInterval) return;
+
+    document.getElementById("invalidLabel").style.visibility = "hidden";
+
     var input = document.getElementById("KeyboardInput").value;
 
     // [__][A___][V___][H___]
-    if(input.length != 14) return; // Invalid input format
-
+    if(input.length != 14) {
+        document.getElementById("invalidLabel").style.visibility = "visible";
+        return; // Invalid input format
+    }
     var tailNum = input.substring(0,2);
     var commands = input.substring(2).match(/.{1,4}/g);
 
@@ -157,7 +168,10 @@ function toggleDataBlock() {
     for(var i = 0; i < commands.length; i++) {
         var command = commands[i][0];
 
-        if(!["A", "V", "H"].includes(command)) return; // Invalid command found
+        if(!["A", "V", "H"].includes(command)) {
+            document.getElementById("invalidLabel").style.visibility = "visible";
+            return; // Invalid command found
+        }
 
         var value = commands[i].substring(1, 4);
         switch(command) {
