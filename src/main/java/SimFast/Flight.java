@@ -12,6 +12,9 @@ public class Flight {
 	private String destination;
 	private String aircraft;
 	private boolean endPhl;
+	private String depAirport;
+	private String squawk;
+	private String flightPlanId;
 
 	public long getId() {
 		return id;
@@ -33,21 +36,19 @@ public class Flight {
 	}
 
 	public int getStartingY() {
-
 		return startingY;
 	}
 
-	public int getHeading() {
-
-		return heading;
+	public String getHeading() {
+		return String.format("%03d", heading);
 	}
 
-	public int getAltitude() {
-		return altitude;
+	public String getAltitude() {
+		return String.format("%03d", altitude);
 	}
 
-	public int getGroundSpeed() {
-		return groundSpeed;
+	public String getGroundSpeed() {
+		return String.format("%03d", groundSpeed);
 	}
 
 	public String getDestination() {
@@ -61,4 +62,17 @@ public class Flight {
 	public boolean getEndPhl() {
 		return endPhl;
 	}
+
+	public String getDepAirport() {
+		return depAirport;
+	}
+
+	public String getSquawk() {
+		return squawk;
+	}
+
+	public String getFlightPlanId() {
+		return flightPlanId;
+	}
+
 }

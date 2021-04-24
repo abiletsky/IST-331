@@ -1,34 +1,40 @@
 [
   {
 	"id": 1,
-	"startTime": 2500,
+	"startTime": 0,
 	"tailNumber": "N536SP",
 	"startingX": 400,
 	"startingY": 0,
 	"heading": 270,
 	"altitude": 26,
 	"groundSpeed": 11,
-	"destination": "LAX",
+	"destination": "RSW",
 	"aircraft": "C172",
-	"endPhl": false
+	"endPhl": false,
+	"depAirport": "ACY",
+	"squawk": "536S",
+	"flightPlanId": "173"
   },
   {
 	"id": 2,
-	"startTime": 2500,
+	"startTime": 1500,
 	"tailNumber": "UPS2196",
-	"startingX": 400,
-	"startingY": 400,
-	"heading": 270,
+	"startingX": 0,
+	"startingY": 530,
+	"heading": 0,
 	"altitude": 26,
 	"groundSpeed": 11,
 	"destination": "PHL",
 	"aircraft": "B763",
-	"endPhl": true
+	"endPhl": true,
+	"depAirport": "PIT",
+	"squawk": "2196",
+	"flightPlanId": "594"
   },
   {
 	"id": 3,
 	"startTime": 2500,
-	"tailNumber": "N536SP",
+	"tailNumber": "AAL7165",
 	"startingX": 400,
 	"startingY": 400,
 	"heading": 270,
@@ -36,11 +42,14 @@
 	"groundSpeed": 11,
 	"destination": "LAX",
 	"aircraft": "C172",
-	"endPhl": false
+	"endPhl": false,
+	"depAirport": "ACY",
+	"squawk": "7165",
+	"flightPlanId": "519"
   },
   {
 	"id": 4,
-	"startTime": 2500,
+	"startTime": 5000,
 	"tailNumber": "DAL4376",
 	"startingX": 310,
 	"startingY": 530,
@@ -49,6 +58,10 @@
 	"groundSpeed": 11,
 	"destination": "EWR",
 	"aircraft": "C172",
-	"endPhl": false
+	"endPhl": false,
+	"depAirport": "PHL",
+	"squawk": "4376",
+	"flightPlanId": "721"
+
   }
 ]

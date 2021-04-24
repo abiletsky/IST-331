@@ -7,13 +7,25 @@ var animationInterval;
 var dataBlockInterval;
 
 var totalSeconds = 0;
+var totalMs = 0;
 
 function setTime() {
+    totalMs += baseFreq / timerRate;
+
+    var flights = document.getElementsByClassName("flight-not-ready");
+    for(var i = 0; i < flights.length; i++) {
+        if (flights[0].getAttribute("data-startTime") / timerRate <= totalMs)
+            flights[0].classList.remove("flight-not-ready");
+    }
+
+    var hoursLabel = document.getElementById("hours");
     var minutesLabel = document.getElementById("minutes");
     var secondsLabel = document.getElementById("seconds");
+
     ++totalSeconds;
     secondsLabel.innerHTML = pad(totalSeconds % 60);
     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+    hoursLabel.innerHTML = pad(parseInt(totalSeconds / 60 / 60));
 }
 
 function pad(val) {
@@ -26,10 +38,8 @@ function pad(val) {
 }
 
 function changeRate() {
-    timerRate = document.getElementById('speed').value;
+    timerRate = document.getElementById('rate').value;
 }
-
-
 
 function startSimulation() {
     timerInterval = setInterval(setTime, baseFreq / timerRate);
@@ -37,10 +47,13 @@ function startSimulation() {
     dataBlockInterval = setInterval(toggleDataBlock, 2000);
 }
 
-// Calculate slope from angle and one point: https://stackoverflow.com/questions/1571294/line-equation-with-angle
-// Don't need slope, calc new x and new y instead: https://math.stackexchange.com/questions/143932/calculate-point-given-x-y-angle-and-distance
+function resetSimulation() {
+    location.reload();
+}
+
+// Calc new x and new y: https://math.stackexchange.com/questions/143932/calculate-point-given-x-y-angle-and-distance
 function frame() {
-    var flights = document.getElementsByClassName("flight");
+    var flights = document.querySelectorAll(".flight:not(.flight-not-ready)");
 
     for(var i = 0; i < flights.length; i++) {
         flights[i].style.position = "absolute";
@@ -51,7 +64,7 @@ function frame() {
         var posX = rect.left + window.scrollX;
         var posY = rect.top + window.scrollY;
 
-        if ((flights[i].getAttribute("data-endPhl") == true && posX <= phlX + 14 && posX >= phlX && posY <= phlY + 14 && posY >= phlY) || (posX < 0 || posY < 0 || posX > 800 || posY > 800)) {
+        if ((flights[i].getAttribute("data-endPhl") === "true" && posX <= phlX + 14 && posX >= phlX && posY <= phlY + 14 && posY >= phlY) || (posX < 0 || posY < 0 || posX > 800 || posY > 800)) {
             flights[i].remove();
         } else {
             posX += 2 * (Math.cos(degrees * Math.PI / 180));
@@ -60,35 +73,70 @@ function frame() {
             flights[i].style.left = posX + "px";
         }
     }
-    if (flights.length == 0) {
+
+    if (flights.length == 0 && document.getElementsByClassName("flight").length == 0) {
         clearInterval(timerInterval);
         clearInterval(animationInterval);
         clearInterval(dataBlockInterval);
     }
 }
 
-function updateHeading(flight, heading) {
+function letterPress(letter) {
+    var input = document.getElementById("KeyboardInput");
+    input.value += letter;
 }
 
-function updateAltitude(flight, altitude) {
+function backspace() {
+    var clear = document.getElementById("KeyboardInput").value;
+    document.getElementById("KeyboardInput").value = clear.substring(0, clear.length - 1);
 }
 
-function updateGroundSpeed(flight, groundSpeed) {
+function clearInput(){
+    var input = document.getElementById("KeyboardInput");
+    input.value = "";
+}
+
+function updateHeading(flightId, heading) {
+    var flightDiv = document.getElementById(flightId);
+    flightDiv.setAttribute('data-heading', heading);
+}
+
+function updateAltitude(flightId, altitude) {
+    var flightDiv = document.getElementById(flightId);
+    var altitudeDiv = flightDiv.querySelector('span[name="dbAltitude"]');
+
+    altitudeDiv.innerText = altitude;
+    flightDiv.setAttribute('data-altitude', altitude);
+}
+
+function updateGroundSpeed(flightId, groundSpeed) {
+    var flightDiv = document.getElementById(flightId);
+    var groundSpeedDiv = flightDiv.querySelector('span[name="dbGroundSpeed"]');
+
+    groundSpeedDiv.innerText = groundSpeed;
+    flightDiv.setAttribute('data-groundSpeed', groundSpeed);
 }
 
 function showFlightData(flightId) {
     var flight = document.getElementById(flightId);
 
+    document.getElementById("fsTailNumber").innerText = flightId;
+    document.getElementById("fsSquawk").innerText = flight.getAttribute("data-squawk");
+    document.getElementById("fsDepAirport").innerText = flight.getAttribute("data-depAirport");
+    document.getElementById("fsCompleteRoute").innerText = flight.getAttribute("data-depAirport") + "  FIX1  " + flight.getAttribute("data-destination");
 
-    console.log(flight);
+    document.getElementById("fsAircraft").innerText = flight.getAttribute("data-aircraft");
+    document.getElementById("fsFlightPlanId").innerText = flight.getAttribute("data-flightPlanId");
+    document.getElementById("fsAltitude").innerText = flight.getAttribute("data-altitude");
+    document.getElementById("fsRemarks").innerText = "IFR TRAINING FLIGHT";
 }
 
 function toggleDataBlock() {
     var flights = document.getElementsByClassName("flight");
 
     for(var i = 0; i < flights.length; i++) {
-        var db1 = flight[i].querySelector('span[name="data-block-1"]');
-        var db2 = flight[i].querySelector('span[name="data-block-2"]');
+        var db1 = flights[i].querySelector('span[name="data-block-1"]');
+        var db2 = flights[i].querySelector('span[name="data-block-2"]');
 
         db1.classList.toggle("data-block-hidden");
         db2.classList.toggle("data-block-hidden");
@@ -106,19 +154,32 @@ function toggleDataBlock() {
 
     var flight = document.querySelector(`.flight[name="${tailNum}"]`);
 
-    for(var command in commands) {
-        if(!["A", "V", "H"].includes(command[0])) return; // Invalid command found
+    for(var i = 0; i < commands.length; i++) {
+        var command = commands[i][0];
 
-        switch(command[0]) {
+        if(!["A", "V", "H"].includes(command)) return; // Invalid command found
+
+        var value = commands[i].substring(1, 4);
+        switch(command) {
             case "A":
-                updateAltitude(flight.id, command.substring(1));
+                updateAltitude(flight.id, value);
                 break;
             case "V":
-                updateGroundSpeed(flight.id, command.substring(1));
+                updateGroundSpeed(flight.id, value);
                 break;
             case "H":
-                updateHeading(flight.id, command.substring(1));
+                updateHeading(flight.id, value);
                 break;
         }
     }
+
+    clearInput();
+ }
+
+function showLoadedFlights() {
+
+}
+
+ function flightSearchFilter() {
+
  }

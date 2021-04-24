@@ -1,43 +1,41 @@
 <html>
 <head>
     <style>
-    div.flight {
-        background-color: transparent;
-        width: 12px;
-        height: 12px;
-        position: absolute;
-        color: white;
-        font-family: sans-serif;
-        font-size: 12px;
-    }
+div.flight {
+    background-color: transparent;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    color: white;
+    font-family: sans-serif;
+    font-size: 12px;
+}
 
-    .space{
-width: 200px;
-border-radius: 10px;
-margin: 0px 0px 0px 0px;
-background-color: yellow;
+.space{
+    width: 200px;
+    border-radius: 10px;
+    margin: 0px 0px 0px 0px;
+    background-color: yellow;
 }
 .backspace{
-width: 100px;
-border-radius: 10px;
-margin: 10px 10px 10px 10px;
-background-color: yellow;
+    width: 100px;
+    border-radius: 10px;
+    margin: 10px 10px 10px 10px;
+    background-color: yellow;
 }
 .enter{
-width: 100px;
-border-radius: 10px;
-margin: 0px 0px 0px 0px;
-background-color: red;
+    width: 100px;
+    border-radius: 10px;
+    margin: 0px 0px 0px 0px;
+    background-color: red;
 }
 .clear{
-width: 100px;
-border-radius: 10px;
-margin: 10px 10px 10px 10px;
-background-color: yellow;
+    width: 100px;
+    border-radius: 10px;
+    margin: 10px 10px 10px 10px;
+    background-color: yellow;
 }
-.Zero{
-margin-left: 120px
-}
+
 table {
     border: solid 2px black;
 }
@@ -46,51 +44,58 @@ table.th {
     padding: 5px;
 }
 div.KeyboardInput{
-    margin:10px;
     width: 200px;
 }
 div.flightsearch{
-        margin:10px;
-        border: solid 1px black;
-        padding: 15px 15px;
-        display: inline-block;
-        margin-left: 55%;
-
-    }
+    border: solid 1px black;
+    padding: 15px 15px;
+    display: inline-block;
+}
 
 .btn{
- margin: 9px;
- width: 30px;
- height: 30px;
- background-color: aliceblue;
-
-}
-.Zero{
-margin: 5px;
- width: 30px;
- height: 30px;
-
-    margin-left: 165px;
+    margin: 5px 6px;
+    width: 40px;
+    height: 40px;
     background-color: aliceblue;
-}
-.Special{
 
-margin: 5px;
- width: 100px;
- height: 40px;
- background-color: rgb(16, 219, 16);
 }
+.num{
+    margin: 5px 6px;
+    width: 40px;
+    height: 40px;
+    background-color: lightblue;
+
+}
+.Zero {
+    margin: 5px 6px;
+    width: 40px;
+    height: 40px;
+
+    margin-left: 174px;
+    background-color: lightblue;
+}
+
 .Special2{
-margin: 5px 6px;
- width: 40px;
- height: 40px;
- background-color: rgb(16, 219, 16);
- font-size: 10px;
+    margin: 5px 6px;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(16, 219, 16);
+    font-size: 10px;
+    text-align: center;
+    margin-right: 10px;
+}
+.Special3 {
+    margin: 5px 6px;
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    font-size: 10px;
+    text-align: center;
+    margin-right: 10px;
 }
 .container{
-padding-bottom: 200px;
-box-sizing: border-box;
-background-color: lightgray;
+    box-sizing: border-box;
+    background-color: lightgray;
 }
 
 .data-block-hidden {
@@ -98,23 +103,30 @@ background-color: lightgray;
     top: -100px;
     visibility: hidden;
 }
+.flight-not-ready {
+    visibility: hidden;
+}
+.row {
+    display: flex;
+}
     </style>
     <script src="js/index.js"></script>
 </head>
 <body style="margin: 0px;">
-<div id="scope" style="background-color: Black; height: 800px; width: 800px;"></div>
-    <div id="phl" style="background-color: rgb(118, 116, 116); position: absolute; top: 530px; left: 310px; width: 14px; height: 14px;">
-
-    </div>
+    <div id="scope" style="background-color: Black; height: 800px; width: 800px;"></div>
+    <div id="phl" style="background-color: rgb(118, 116, 116); color: white; font-family: sans-serif; font-size: 14px; text-align: center; line-height: 14px;  position: absolute; top: 530px; left: 310px; width: 14px; height: 14px;">X</div>
 
     {% for flight in flights %}
-        {% set tailNumber = flight.getTailNumber() %}
-
-    <div id="flight_{{ flight.getId() }}" class="flight" data-startTime="{{ flight.getStartTime() }}"
+    {# @pebvariable name="flight" type="SimFast.Flight" #}
+    {% set tailNumber = flight.getTailNumber() %}
+    <div id="{{ flight.getTailNumber() }}" class="flight flight-not-ready" data-startTime="{{ flight.getStartTime() }}"
          data-heading="{{ flight.getHeading() }}" data-altitude="{{ flight.getAltitude() }}"
          data-groundSpeed="{{ flight.getGroundSpeed() }}" data-destination="{{ flight.getDestination() }}"
          data-aircraft="{{ flight.getAircraft() }}" data-endPhl="{{ flight.getEndPhl() }}"
-         style="visibility: visible; top: {{ flight.getStartingY() }}; left: {{ flight.getStartingX() }};" onclick="showFlightData('flight_{{ flight.getId() }}')" name="{{ tailNumber | slice(tailNumber|length - 2, tailNumber|length) }}">
+         data-depAirport="{{ flight.getDepAirport() }}" data-squawk="{{ flight.getSquawk() }}"
+         data-flightPlanId="{{ flight.getFlightPlanId() }}"
+         style="top: {{ flight.getStartingY() }}; left: {{ flight.getStartingX() }};" onclick="showFlightData('{{ flight.getTailNumber() }}')"
+         name="{{ tailNumber | slice(tailNumber|length - 2, tailNumber|length) }}">
         V
         <div style="position: relative; top: -40px; left: 18px; font-size: 10px; display: block; width: 100px; color: white;">
             <span>{{ flight.getTailNumber() }}</span><br/>
@@ -122,15 +134,15 @@ background-color: lightgray;
                 <span name="dbAltitude">{{ flight.getAltitude() }}</span>&nbsp;&nbsp;<span name="dbGroundSpeed">{{ flight.getGroundSpeed() }}</span>
             </span>
             <span name="data-block-2" class="data-block-hidden">
-                <p name="dbDestination">{{ flight.getDestination() }}</p>&nbsp;<p name="dbAircraft">{{ flight.getAircraft() }}</p>
+                <span name="dbDestination">{{ flight.getDestination() }}</span>&nbsp;&nbsp;<span name="dbAircraft">{{ flight.getAircraft() }}</span>
             </span>
         </div>
     </div>
     {% endfor %}
-
-<div style="position: absolute;  left: 810px; top: 5px;">
-    <span style="border: 1px solid black; padding: 1px 4px 1px 4px;" id="timer"><label id="minutes">00</label>:<label id="seconds">00</label></span>
-    <select id="speed" onchange="changeRate()">
+</body>
+<div style="position: absolute; top: 5px; left: 810px; ">
+    <span style="border: 1px solid black; padding: 1px 4px 1px 4px;" id="timer"><label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label></span>
+    <select id="rate" onchange="changeRate()">
         <option value="1">1x</option>
         <option value="2">2x</option>
         <option value="4">4x</option>
@@ -138,44 +150,40 @@ background-color: lightgray;
     </select>
 
     <button onclick="startSimulation()">Start Simulation</button>
+    <button onclick="resetSimulation()">Reset Simulation</button>
 </div>
 
-<div class="container2" style="width: 600px; height: 300px; position: absolute; left:55%; top: 30px">
-    <table border="1" cellspacing="0px" cellpadding="1px" width="85%">
+<div style="width: 600px; height: 70px; top: 35px; left: 810px; position: absolute; ">
+    <table border="1" cellspacing="0px" cellpadding="1px" width="85%" style="font-family: sans-serif;">
         <tr>
-            <td id="fsTailNumber"></td>
-            <td id="fsSquawk">SQUAWK</td>
-            <td id="fsDepAirport">Dep. Airport</td>
-            <td id="fsCompleteRoute">Complete Route</td>
+            <td id="fsTailNumber" style="height: 22px; width: 100px;"></td>
+            <td id="fsSquawk" style="width: 110px;"></td>
+            <td id="fsDepAirport" style="border-bottom: none;"></td>
+            <td id="fsCompleteRoute" style="width: 198px; border-bottom: none;"></td>
         </tr>
         <tr>
             <td id="fsAircraft"></td>
             <td id="fsProposedTime"></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td style="border-top: none;  border-bottom: none; width: 80px;">&nbsp;</td>
+            <td style="border-top: none;"></td>
         </tr>
         <tr>
-            <td id="fsFlightPlanId">Flight Plan ID</td>
+            <td id="fsFlightPlanId" style="height: 22px;"></td>
             <td id="fsAltitude"></td>
-            <td></td>
-            <td id="fsRemarks">Remarks</td>
+            <td style="border-top: none;"></td>
+            <td id="fsRemarks"></td>
         </tr>
     </table>
 </div>
-<div class="flightsearch" style="width: 500px; height: 50px; position: absolute; left:0%; top: 150px;">
-    <label>Flight Search </label>
-    <input name="flightsearch" placeholder="Search Flights" type="text">
-
-    <select name="Flights">
-        <option value="--">Select flight</option>
-        <option value="Sprint-A340-PHL-to-AMD">A340-PHL-AMD</option>
-        <option value="American-Airlines-AI345-PHL-to-ILN">AI345-PHL-ILN</option>
-    </select>
-    <br/>
-    <button type="search" name="submit">Search</button>
+<div class="flightsearch" style="width: 500px; height: 50px; position: absolute; top: 150px; left: 810px;">
+    <label>Search Flights: </label>
+    <input name="flightsearch" type="text">
 </div>
-<div class="container" style="width: 570px; height: 426px; position: absolute; left:55%; top: 330px">
-    <div class="row-one">
+<div class="KeyboardInput" style="position: absolute; top: 250px; left: 810px;">
+    <input name="KeyboardInput" id="KeyboardInput"  style="width: 200px;" type="text">
+</div>
+<div class="container" style="width: 570px; height: 450px; position: absolute; top: 350px; left: 810px;">
+    <div class="row">
         <button class="Special2">M1</button>
         <button class="Special2">M2</button>
         <button class="Special2">M3</button>
@@ -187,7 +195,7 @@ background-color: lightgray;
         <button class="Special2">M7</button>
         <button class="Special2">M8</button>
     </div>
-    <div class="row-two">
+    <div class="row">
         <button class="Special2">M9</button>
         <button class="Special2">M10</button>
         <button class="Special2">M11</button>
@@ -199,13 +207,13 @@ background-color: lightgray;
         <button class="Special2">M15</button>
         <button class="Special2">M16</button>
     </div>
-    <div class="row-second">
-        <button class="clear">CLEAR</button>
-        <button class="backspace">BACKSPACE</button>
-        <button class="space">SPACE</button>
+    <div>
+        <button class="clear" onclick="clearInput()">CLEAR</button>
+        <button class="backspace" onclick="backspace()">BACKSPACE</button>
+        <button class="space" onclick="letterPress(' ')">SPACE</button>
         <button class="enter" onclick="parseInput()">ENTER</button>
     </div>
-    <div class="row-third">
+    <div class="row">
         <button class="Special2">INIT CTRL</button>
         <button class="Special2">TRK RPOS</button>
         <button class="Special2">TRK SUSP</button>
@@ -214,58 +222,67 @@ background-color: lightgray;
         <button class="Special2">FLT Data</button>
         <button class="Special2">MULTI FUNC</button>
         <button class="Special2">F8</button>
-        <button class="Special2">M7</button>
-        <button class="Special2">M8</button>
+        <button class="Special3">/\</button>
+        <button class="Special3">.</button>
     </div>
-    <div class="row-six">
-        <button class="btn" onclick="myfunction('A')">A</button>
-        <button class="btn">B</button>
-        <button class="btn">C</button>
-        <button class="btn">D</button>
-        <button class="btn">E</button>
-        <button class="btn">F</button>
-        <button class="btn">G</button>
-        <button class="btn">1</button>
-        <button class="btn">2</button>
-        <button class="btn">3</button>
+    <div class="row">
+        <button class="Special2">F9</button>
+        <button class="Special2">F10</button>
+        <button class="Special2">CA</button>
+        <button class="Special2">F12</button>
+        <button class="Special2">F13</button>
+        <button class="Special2">F14</button>
+        <button class="Special2">TGT Gen</button>
+        <button class="Special2">F16</button>
+        <button class="Special3">IFR +</button>
+        <button class="Special3" style="margin-top">VFR /</button>
     </div>
-    <div class="row-seven">
-        <button class="btn">H</button>
-        <button class="btn">I</button>
-        <button class="btn">J</button>
-        <button class="btn">K</button>
-        <button class="btn">L</button>
-        <button class="btn">M</button>
-        <button class="btn">N</button>
-        <button class="btn">4</button>
-        <button class="btn">5</button>
-        <button class="btn">6</button>
+    <div>
+        <button class="btn" onclick="letterPress('A')">A</button>
+        <button class="btn" onclick="letterPress('B')">B</button>
+        <button class="btn" onclick="letterPress('C')">C</button>
+        <button class="btn" onclick="letterPress('D')">D</button>
+        <button class="btn" onclick="letterPress('E')">E</button>
+        <button class="btn" onclick="letterPress('F')">F</button>
+        <button class="btn" onclick="letterPress('G')">G</button>
+        <button class="num" onclick="letterPress('1')">1</button>
+        <button class="num" onclick="letterPress('2')">2</button>
+        <button class="num" onclick="letterPress('3')">3</button>
     </div>
-    <div class="row-eight">
-        <button class="btn">O</button>
-        <button class="btn">P</button>
-        <button class="btn">Q</button>
-        <button class="btn">R</button>
-        <button class="btn">S</button>
-        <button class="btn">T</button>
-        <button class="btn">U</button>
-        <button class="btn">7</button>
-        <button class="btn">8</button>
-        <button class="btn">9</button>
+    <div>
+        <button class="btn" onclick="letterPress('H')">H</button>
+        <button class="btn" onclick="letterPress('I')">I</button>
+        <button class="btn" onclick="letterPress('J')">J</button>
+        <button class="btn" onclick="letterPress('K')">K</button>
+        <button class="btn" onclick="letterPress('L')">L</button>
+        <button class="btn" onclick="letterPress('M')">M</button>
+        <button class="btn" onclick="letterPress('N')">N</button>
+        <button class="num" onclick="letterPress('4')">4</button>
+        <button class="num" onclick="letterPress('5')">5</button>
+        <button class="num" onclick="letterPress('6')">6</button>
     </div>
-    <div class="row-nine">
-        <button class="btn">V</button>
-        <button class="btn">W</button>
-        <button class="btn">X</button>
-        <button class="btn">Y</button>
-        <button class="btn">Z</button>
+    <div>
+        <button class="btn" onclick="letterPress('O')">O</button>
+        <button class="btn" onclick="letterPress('P')">P</button>
+        <button class="btn" onclick="letterPress('Q')">Q</button>
+        <button class="btn" onclick="letterPress('R')">R</button>
+        <button class="btn" onclick="letterPress('S')">S</button>
+        <button class="btn" onclick="letterPress('T')">T</button>
+        <button class="btn" onclick="letterPress('U')">U</button>
+        <button class="num" onclick="letterPress('7')">7</button>
+        <button class="num" onclick="letterPress('8')">8</button>
+        <button class="num" onclick="letterPress('9')">9</button>
+    </div>
+    <div>
+        <button class="btn" onclick="letterPress('V')">V</button>
+        <button class="btn" onclick="letterPress('W')">W</button>
+        <button class="btn" onclick="letterPress('X')">X</button>
+        <button class="btn" onclick="letterPress('Y')">Y</button>
+        <button class="btn" onclick="letterPress('Z')">Z</button>
 
-        <button class="Zero">0</button>
+        <button class="Zero" onclick="letterPress('0')">0</button>
 
     </div>
-</div>
-<div class="KeybordInput" style="position: absolute; left:60%; top: 250px;">
-    <input name="KeyboardInput" id="KeyboardInput"  style="width: 200px;" type="text">
 </div>
 </body>
 </html>

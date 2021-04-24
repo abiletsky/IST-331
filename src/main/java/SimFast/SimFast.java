@@ -20,9 +20,4 @@ public class SimFast {
 	public List<Flight> getFlights() throws Exception{
 		return Arrays.asList(new ObjectMapper().readValue(new ClassPathResource("flight-data.json").getFile(), Flight[].class));
 	}
-
-	@Bean
-	public List<Fruit> getFruits() throws Exception{
-		return Arrays.asList(new ObjectMapper().readValue(new ClassPathResource("fruit-data.json").getFile(), Fruit[].class));
-	}
 }
